@@ -17,7 +17,6 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, AcademicCapIcon , UsersIcon , ArrowLeftStartOnRectangleIcon, DocumentArrowDownIcon, CurrencyDollarIcon, BookOpenIcon  } from '@heroicons/react/20/solid'
-import { Link } from 'react-router-dom'
 
 
 const products = [
@@ -32,8 +31,9 @@ const info = [
   { name: 'Składka', description: 'Wysokość składek', href: 'skladka', icon: CurrencyDollarIcon },
 ]
 
-export default function Example() {
+export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const navigate = useNavigate();
 
   return (
     <header className="bg-white">

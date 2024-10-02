@@ -1,18 +1,9 @@
 import React from "react"
+import TitleLayout from "./TitleLayout"
 
 const Training = (props) => {
   return (
-    <div>
-        <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Harmonogram Treningów
-          </h2>
-          <p className="mt-2 text-lg leading-8 text-gray-600">
-            Plan treningów Basen Hajduki ul. Graniczna 92
-          </p>
-        </div>
+    <TitleLayout title={"Harmonogram Treningów"} desc={"Plan treningów Basen Hajduki ul. Graniczna 92"}>
 
 <div class="relative overflow-x-auto rounded-lg mb-10 shadow-md">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
@@ -211,11 +202,8 @@ const Training = (props) => {
         </tbody>
     </table>
 </div>
-    </div>
-    </div>
+</TitleLayout>
 
-      
-    </div>
   )
 };
 
