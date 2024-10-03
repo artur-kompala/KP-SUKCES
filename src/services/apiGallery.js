@@ -66,6 +66,19 @@ export async function getAllFiles() {
   return data 
 }
 
+export async function getContribution() {
+  let { data, error } = await supabase
+  .from('contribution')
+  .select('*')
+  
+  if(error){
+    console.log(error);
+  }
+  
+  return data 
+  
+}
+
 
 
           

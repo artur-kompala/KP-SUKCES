@@ -2,3 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+ul {
+    list-style-type: disc; /* Ustawia styl punktów na dysk */
+    padding-left: 1.25em; /* Opcjonalnie: dodaje lewy padding */
+}
+
+ul li {
+    margin-bottom: 0.5em; /* Opcjonalnie: dodaje odstęp między elementami listy */
+}
+
+/* Własne style dla list numerowanych */
+ol {
+    list-style-type: decimal; /* Ustawia styl numerowania na dziesiętny */
+    padding-left: 1.25em; /* Opcjonalnie: dodaje lewy padding */
+}
+
+ol li {
+    margin-bottom: 0.5em; /* Opcjonalnie: dodaje odstęp między elementami listy */
+}

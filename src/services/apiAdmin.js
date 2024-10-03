@@ -114,3 +114,16 @@ console.log(error);
 
 }
 
+export async function editContribution({contribution}){
+  const { data, error } = await supabase
+  .from('contribution')
+  .update({ desc: contribution })
+  .eq("id", 1)
+  .select()
+
+  console.log(data);
+  console.log(error);
+
+}
+
+

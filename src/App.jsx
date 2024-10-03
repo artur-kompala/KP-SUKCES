@@ -13,6 +13,7 @@ import Login from "./ui/Login";
 import AdminPanel from "./ui/AdminPanel"
 import ProtectedRoute from "./ui/ProtectedRoute";
 import { QueryClient, QueryClientProvider } from "react-query";
+import PageNotFound from "./ui/PageNotFound";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +46,7 @@ const App = () => {
             <Route path="treningi" element={<Training/>} />
             <Route path="dopobrania" element={<Download/>} />
             <Route path="login" element={<Login/>} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
           <Footer></Footer>
         </BrowserRouter>

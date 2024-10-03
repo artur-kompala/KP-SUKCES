@@ -6,6 +6,7 @@ import Viewer from 'react-viewer';
 export default function News() {
   const [visible, setVisible] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [currentImg, setCurrentImg] = useState(null);
 
     useEffect(function(){
       getAllPost().then((data)=>setPosts(data));
@@ -23,7 +24,7 @@ export default function News() {
           </p>
         </div>
         <div className="mx-auto mt-10 grid max-w-2x1 grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-1">
-          {posts.map((post) => (
+          {posts.sort((a, b) => new Date(b.date) - new Date(a.date)).map((post) => (
             <article
               key={post.id}
               className="flex flex-row items-center bg-white shadow dark:bg-gray-100 m-4 rounded-lg p-6"
@@ -33,6 +34,7 @@ export default function News() {
                   src={post.imgSrc}
                   onClick={() => {
                     setVisible(true);
+                    setCurrentImg(post.imgSrc);
                   }}
                 ></img>
                 <Viewer
@@ -40,7 +42,7 @@ export default function News() {
                   onClose={() => {
                     setVisible(false);
                   }}
-                  images={[{ src: post.imgSrc, alt: "opis" }]}
+                  images={[{ src: currentImg, alt: "opis" }]}
                 />
               </div>
               <div className="flex-cols-2 p-6">
