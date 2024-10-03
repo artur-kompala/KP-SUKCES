@@ -1,40 +1,46 @@
 import supabase from "./supabase";
 
-export async function addNewPost({title,desc,imgSrc = null,cat}){
-    let imageUrl = null;
-    
-    if (imgSrc) {
+export async function addNewPost({ title, desc, imgSrc = null, cat }) {
+  let imageUrl = null;
 
-        const fileName = `${Date.now()}_${imgSrc.name}`;
-        
+  try {
+      if (imgSrc) {
+          const fileName = `${Date.now()}_${imgSrc.name}`;
 
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('images')  
-          .upload(fileName, imgSrc);
-    
-        if (uploadError) {
-          console.error("Błąd przesyłania pliku do storage:", uploadError);
-          return; 
-        }
-    
 
-        const { data: publicUrlData } = supabase.storage
-          .from('images')
-          .getPublicUrl(fileName);
-        
-        imageUrl = publicUrlData.publicUrl;
-    }
+          const { data: uploadData, error: uploadError } = await supabase.storage
+              .from('images')
+              .upload(fileName, imgSrc);
 
-    const { data, error } = await supabase
-  .from('news')
-  .insert([
-    { title, desc, imgSrc: imageUrl, cat },
-  ])
-  .select()
-  console.log(data);
-  console.log(error);
-  
+          if (uploadError) {
+              throw new Error(`Błąd przesyłania pliku do storage: ${uploadError.message}`);
+          }
+
+          const { data: publicUrlData } = supabase.storage
+              .from('images')
+              .getPublicUrl(fileName);
+
+          imageUrl = publicUrlData.publicUrl;
+      }
+
+
+      const { data, error } = await supabase
+          .from('news')
+          .insert([{ title, desc, imgSrc: imageUrl, cat, }])
+          .select();
+
+      if (error) {
+          throw new Error(`Błąd przy dodawaniu posta: ${error.message}`);
+      }
+
+      console.log("Dodano post:", data);
+      return data; 
+  } catch (error) {
+      console.error(error.message);
+      throw error; 
+  }
 }
+
 
 export async function addNewPeople({ fullName, role, rankSrc = null, phoneNumber = null,photoSrc = null }){
 

@@ -14,6 +14,7 @@ import AdminPanel from "./ui/AdminPanel"
 import ProtectedRoute from "./ui/ProtectedRoute";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PageNotFound from "./ui/PageNotFound";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,6 +50,7 @@ const App = () => {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
           <Footer></Footer>
+          <Toaster />
         </BrowserRouter>
     
     </QueryClientProvider>

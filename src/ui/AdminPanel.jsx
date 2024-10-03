@@ -25,6 +25,7 @@ import {
   Separator,
   Toolbar,
 } from "react-simple-wysiwyg";
+import toast from "react-hot-toast";
 
 const AdminPanel = () => {
   //Dodawanie Posta
@@ -38,7 +39,12 @@ const AdminPanel = () => {
 
     if (!title || !desc || !cat) return;
 
-    addNewPost({ title, desc, imgSrc, cat });
+    addNewPost({ title, desc, imgSrc, cat }).then(()=>{
+      toast.success('Sukces')
+    }).catch((error)=>{
+      
+      toast.error(error.message)
+    });
   }
   function handleFileChange(e) {
     const file = e.target.files[0];
