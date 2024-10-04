@@ -42,7 +42,7 @@ export async function addNewPost({ title, desc, imgSrc = null, cat }) {
 }
 
 
-export async function addNewPeople({ fullName, role, rankSrc = null, phoneNumber = null,photoSrc = null }){
+export async function addNewPeople({ fullName, role, rankSrc = null, phoneNumber = null, photoSrc = null }){
 
   let imageUrl = null;
   
@@ -130,6 +130,28 @@ export async function editContribution({contribution}){
   console.log(data);
   console.log(error);
 
+}
+
+export async function editGraniczna({garnicznaDay ,garnicznaJunior = "-",garnicznaMid = "-",garnicznaSenior = "-"}){
+  console.log(garnicznaDay);
+  
+  try {
+    const { data, error } = await supabase
+  .from('schedule_Graniczna')
+  .update({ junior: garnicznaJunior, mid: garnicznaMid , senior: garnicznaSenior })
+  .eq('id', garnicznaDay)
+  .select()
+  if (error) {
+    throw new Error(`Błąd przy aktualizacji tabeli Graniczna: ${error.message}`);
+  }
+  console.log("Zaktualizowano table Graniczna:", data);
+      return data; 
+    
+  } catch (error) {
+      console.error(error.message);
+      throw error;
+  }
+  
 }
 
 

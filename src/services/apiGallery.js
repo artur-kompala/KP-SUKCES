@@ -67,6 +67,7 @@ export async function getAllFiles() {
 }
 
 export async function getContribution() {
+
   let { data, error } = await supabase
   .from('contribution')
   .select('*')
@@ -77,6 +78,19 @@ export async function getContribution() {
   
   return data 
   
+}
+
+export async function getAllTrening(){
+
+  let { data, error } = await supabase
+  .from('schedule_Graniczna')
+  .select('*')
+
+  if(error){
+    console.log(error);
+  }
+  
+  return data 
 }
 
 

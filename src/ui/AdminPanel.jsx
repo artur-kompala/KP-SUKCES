@@ -5,6 +5,7 @@ import {
   addNewPeople,
   addNewPost,
   editContribution,
+  editGraniczna,
 } from "../services/apiAdmin";
 import TitleLayout from "./TitleLayout";
 import {
@@ -123,19 +124,43 @@ const AdminPanel = () => {
   function handleResetContribution() {
     setContribution("");
   }
-
+  
   //Graniczna
+  const [garnicznaDay,setGranicznaDay] = useState(1)
+  const [garnicznaJunior,setGranicznaJunior] = useState("")
+  const [garnicznaMid,setGranicznaMid] = useState("")
+  const [garnicznaSenior,setGranicznaSenior] = useState("")
+
   function handleEditGraniczna(e){
+
     e.preventDefault();
+
+    if (!garnicznaDay) return;
+
+    editGraniczna({garnicznaDay,garnicznaJunior,garnicznaMid,garnicznaSenior}).then(()=>{
+      toast.success('Sukces')
+    }).catch((error)=>{
+      toast.error(error.message)
+    });
 
 
   }
   function handleResetGraniczna(){
+    setGranicznaJunior("")
+    setGranicznaMid("")
+    setGranicznaSenior("")
+    setGranicznaDay("Poniedziałek")
 
   }
+
   //Powstańców
+  const [PowstancowDay,setPowstancowDay] = useState("")
+  const [PowstancowJunior,setPowstancowJunior] = useState("")
+  const [PowstancowMid,setPowstancowMid] = useState("")
+  const [PowstancowSenior,setPowstancowSenior] = useState("")
+
   function handleEditPowstancow(e){
-    e.preventDefault();
+    
 
 
   }
@@ -590,30 +615,35 @@ const AdminPanel = () => {
         <div className="mt-10 flex gap-x-6">
           <div className="sm:w-1/4">
             <label
-              htmlFor="role"
+              htmlFor="granicznaDay"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Dzień
             </label>
             <select
-              id="role"
-              name="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              defaultValue={"zawodnik"}
-              autoComplete="role-name"
+              id="granicznaDay"
+              name="granicznaDay"
+              value={garnicznaDay}
+              onChange={(e) => setGranicznaDay(e.target.value)}
+              defaultValue={"Poniedziałek"}
+              autoComplete="granicznaDay"
               className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
-              <option value={"Poniedziałek"}>Poniedziałek</option>
-              <option value={"Wtorek"}>Wtorek</option>
-              <option value={"Środa"}>Środa</option>
-              <option value={"Czwartek"}>Czwartek</option>
-              <option value={"Piątek"}>Piątek</option>
+              <option value={1}>Poniedziałek Graniczna</option>
+              <option value={2}>Wtorek Graniczna</option>
+              <option value={3}>Środa Graniczna</option>
+              <option value={4}>Czwartek Graniczna </option>
+              <option value={5}>Piątek Graniczna</option>
+              <option value={6}>Poniedziałek Powstańców</option>
+              <option value={7}>Wtorek Powstańców</option>
+              <option value={8}>Środa Powstańców</option>
+              <option value={9}>Czwartek Powstańców</option>
+              <option value={10}>Piątek Powstańców</option>
             </select>
           </div>
           <div className="sm:w-1/4">
             <label
-              htmlFor="fullName1"
+              htmlFor="granicznaJunior"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Początkująca
@@ -621,12 +651,12 @@ const AdminPanel = () => {
             <div className="mt-2">
               <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                 <input
-                  id="fullName1"
-                  name="fullName1"
+                  id="granicznaJunior"
+                  name="granicznaJunior"
                   type="text"
-                  autoComplete="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  autoComplete="granicznaJunior"
+                  value={garnicznaJunior}
+                  onChange={(e) => setGranicznaJunior(e.target.value)}
                   className="block w-full rounded-md border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -634,7 +664,7 @@ const AdminPanel = () => {
           </div>
           <div className="sm:w-1/4">
             <label
-              htmlFor="fullName1"
+              htmlFor="granicznaMid"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Średniozawansowana
@@ -642,12 +672,12 @@ const AdminPanel = () => {
             <div className="mt-2">
               <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                 <input
-                  id="fullName1"
-                  name="fullName1"
+                  id="granicznaMid"
+                  name="granicznaMid"
                   type="text"
-                  autoComplete="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  autoComplete="granicznaMid"
+                  value={garnicznaMid}
+                  onChange={(e) => setGranicznaMid(e.target.value)}
                   className="block w-full rounded-md border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -655,7 +685,7 @@ const AdminPanel = () => {
           </div>
           <div className="sm:w-1/4">
             <label
-              htmlFor="fullName1"
+              htmlFor="granicznaSenior"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Zawansowana
@@ -663,12 +693,12 @@ const AdminPanel = () => {
             <div className="mt-2">
               <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                 <input
-                  id="fullName1"
-                  name="fullName1"
+                  id="granicznaSenior"
+                  name="granicznaSenior"
                   type="text"
-                  autoComplete="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  autoComplete="granicznaSernior"
+                  value={garnicznaSenior}
+                  onChange={(e) => setGranicznaSenior(e.target.value)}
                   className="block w-full rounded-md border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -693,119 +723,6 @@ const AdminPanel = () => {
 
         </form>
         
-      </TitleLayout>
-      <TitleLayout
-        title={"Aktualizacja Harmonogramu Powstańców"}
-        desc={
-          "Piew wybierz dzień a następnie wpisz godziny lub ich brak - danego dnia."
-        }
-      >
-         <form onSubmit={handleEditGraniczna}>
-        <div className="mt-10 flex gap-x-6">
-          <div className="sm:w-1/4">
-            <label
-              htmlFor="role"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Dzień
-            </label>
-            <select
-              id="role"
-              name="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              defaultValue={"zawodnik"}
-              autoComplete="role-name"
-              className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option value={"Poniedziałek"}>Poniedziałek</option>
-              <option value={"Wtorek"}>Wtorek</option>
-              <option value={"Środa"}>Środa</option>
-              <option value={"Czwartek"}>Czwartek</option>
-              <option value={"Piątek"}>Piątek</option>
-            </select>
-          </div>
-          <div className="sm:w-1/4">
-            <label
-              htmlFor="fullName1"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Początkująca
-            </label>
-            <div className="mt-2">
-              <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input
-                  id="fullName1"
-                  name="fullName1"
-                  type="text"
-                  autoComplete="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="block w-full rounded-md border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="sm:w-1/4">
-            <label
-              htmlFor="fullName1"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Średniozawansowana
-            </label>
-            <div className="mt-2">
-              <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input
-                  id="fullName1"
-                  name="fullName1"
-                  type="text"
-                  autoComplete="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="block w-full rounded-md border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="sm:w-1/4">
-            <label
-              htmlFor="fullName1"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Zawansowana
-            </label>
-            <div className="mt-2">
-              <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input
-                  id="fullName1"
-                  name="fullName1"
-                  type="text"
-                  autoComplete="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="block w-full rounded-md border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-gray-900"
-              onClick={handleResetGraniczna}
-            >
-              Anuluj
-            </button>
-            <button
-              type="submit"
-              className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Zapisz
-            </button>
-          </div>
-
-        </form>
       </TitleLayout>
     </div>
   );
