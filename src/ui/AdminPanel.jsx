@@ -6,6 +6,7 @@ import {
   addNewPost,
   editContribution,
   editGraniczna,
+  uploadPhoto,
 } from "../services/apiAdmin";
 import TitleLayout from "./TitleLayout";
 import {
@@ -152,21 +153,38 @@ const AdminPanel = () => {
     setGranicznaDay("Poniedziałek")
 
   }
+  //GALERIA
+  const [city,setCity] = useState("")
+  const [descPhotos,setDescPhotos] = useState("")
+  const [photos,setPhotos] = useState([])
 
-  //Powstańców
-  const [PowstancowDay,setPowstancowDay] = useState("")
-  const [PowstancowJunior,setPowstancowJunior] = useState("")
-  const [PowstancowMid,setPowstancowMid] = useState("")
-  const [PowstancowSenior,setPowstancowSenior] = useState("")
+  function handlePhotosChange(e) {
+    const selectedFiles = Array.from(e.target.files);  
+    if (selectedFiles.length > 0) {
+      setPhotos((prevPhotos) => [...prevPhotos, ...selectedFiles]); 
+    }
+  }
 
-  function handleEditPowstancow(e){
+
+  function handleUploadPhoto(e){
+    e.preventDefault();
+    const toastId = toast.loading('Trwa wysyłanie ...');
+    uploadPhoto({city, desc: descPhotos, photos}).then(()=>{
+      toast.dismiss(toastId);
+      toast.success('Sukces')
+    }).catch((error)=>{
+      toast.dismiss(toastId);
+      toast.error(error.message)
+    });
+  }
+  function handleResetPhotos(){
     
-
-
+    setCity("")
+    setDescPhotos([])
+    setPhotos("")
   }
-  function handleResetPowstancow(){
 
-  }
+
 
   return (
     <div>
@@ -723,6 +741,116 @@ const AdminPanel = () => {
 
         </form>
         
+      </TitleLayout>
+      <TitleLayout
+        title={"Dodawanie zdjęć do galerii"}
+        desc={"W tej sekcji możesz dodać wiele zdjęć do galerii."}
+      >
+        <form onSubmit={handleUploadPhoto}>
+          <div className="space-y-12">
+            <div className="border-b border-gray-900/10 pb-12">
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8">
+                <div className="sm:col-span-4">
+                  <label
+                    htmlFor="city"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Miasto
+                  </label>
+                  <div className="mt-2">
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                      <input
+                        id="city"
+                        name="city"
+                        type="text"
+                        autoComplete="city"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="sm:col-span-4">
+                  <label
+                    htmlFor="username"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Opis wydarzenia
+                  </label>
+                  <div className="mt-2">
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                      <input
+                        id="descPhotos"
+                        name="descPhotos"
+                        type="text"
+                        autoComplete="descPhotos"
+                        value={descPhotos}
+                        onChange={(e) => setDescPhotos(e.target.value)}
+                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                
+
+                <div className="col-span-full">
+                  <label
+                    htmlFor="cover-photo"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Zdjęcie posta
+                  </label>
+                  <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                    <div className="text-center">
+                      <PhotoIcon
+                        aria-hidden="true"
+                        className="mx-auto h-12 w-12 text-gray-300"
+                      />
+                      <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                        <label
+                          htmlFor="photos-upload"
+                          className="relative cursor-pointer rounded-md bg-white font-semibold text-gray-900 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-gray-600"
+                        >
+                          <span>Dodaj plik</span>
+                          <input
+                            id="photos-upload"
+                            name="photos-upload"
+                            type="file"
+                            className="sr-only"
+                            multiple
+                            onChange={handlePhotosChange}
+                          />
+                        </label>
+                        <p className="pl-1">przeciągnij i upuść</p>
+                      </div>
+                      <p className="text-xs leading-5 text-gray-600">
+                        PNG, JPG, GIF do 10MB
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-center justify-end gap-x-6">
+            <button
+              type="button"
+              className="text-sm font-semibold leading-6 text-gray-900"
+              onClick={handleResetPhotos}
+            >
+              Anuluj
+            </button>
+            <button
+              type="submit"
+              className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Zapisz
+            </button>
+          </div>
+        </form>
       </TitleLayout>
     </div>
   );

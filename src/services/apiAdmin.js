@@ -1,5 +1,6 @@
 import supabase from "./supabase";
 
+
 export async function addNewPost({ title, desc, imgSrc = null, cat }) {
   let imageUrl = null;
 
@@ -153,5 +154,46 @@ export async function editGraniczna({garnicznaDay ,garnicznaJunior = "-",garnicz
   }
   
 }
+
+function sanitizeKey(key) {
+  return key.replace(/[^a-zA-Z0-9-_\.]/g, '_');  // Replace invalid characters
+}
+
+export async function uploadPhoto({ city, desc, photos }) {
+  const currentDate = new Date().toISOString().split('T')[0];
+  const sanitizedDesc = sanitizeKey(desc);  // Sanitize the description
+  const sanitizedCity = sanitizeKey(city);  // Sanitize the city
+  const folderName = `${sanitizedDesc}-${sanitizedCity}-${currentDate}/`;
+
+  for (const photo of photos) {
+    try {
+      // Get the file name directly from the File object
+      const fileName = photo.name;
+      const filePathInBucket = folderName + fileName;
+
+      // Using FormData for uploading files
+      const formData = new FormData();
+      formData.append('file', photo);
+
+      // Assuming supabase has a method that accepts FormData directly
+      const { data, error } = await supabase
+        .storage
+        .from("gallery")
+        .upload(filePathInBucket, photo);
+
+      if (error) {
+        console.error(`Error uploading file ${fileName}:`, error.message);
+      } else {
+        console.log(`File ${fileName} has been uploaded to folder ${folderName}`);
+      }
+    } catch (err) {
+      console.error(`Error reading file ${photo.name}:`, err.message);
+    }
+  }
+}
+
+
+
+
 
 

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 'use client'
 
 import { useState } from 'react'
@@ -66,8 +66,33 @@ const filters = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-const Images = (props) => {
+const Images = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [photos, setPhotos] = useState([]); // Stan na zdjęcia
+  
+  useEffect(() => {
+  const fetchPhotos = async () => {
+    console.log('halo1');
+    try {
+      console.log('halo2');
+      
+      const response = await fetch("http://kpsukces.pl/new/downloadImage.php");
+      const text = await response.text(); // Zmieniamy na text, aby zobaczyć, co zwraca serwer
+      console.log("Response Text:", text); // Logujemy odpowiedź jako tekst
+      const data = JSON.parse(text); // Ręcznie konwertujemy na JSON
+      console.log("Parsed Data:", data); // Logujemy przetworzone dane
+      
+      setPhotos(data); // Ustaw zdjęcia
+    } catch (error) {
+      console.error("Error fetching photos:", error);
+    }
+  };
+
+  fetchPhotos();
+}, []);
+
+  
+
   return (
     <div className="bg-white">
       <div>
@@ -253,7 +278,27 @@ const Images = (props) => {
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3">{/* Your content */}</div>
+              <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {/* Wyświetlanie zdjęć */}
+                {photos.length > 0 ? (
+                  photos.map((photo) => (
+                    
+                    
+                    <div key={photo.src} className="group">
+                      <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
+                        <img
+                          src={photo.src}
+                          alt={photo.descript}
+                          className="h-full w-full object-cover object-center"
+                        />
+                      </div>
+                      <h3 className="mt-4 text-sm text-gray-700">{photo.title}</h3>
+                    </div>
+                  ))
+                ) : (
+                  <p>Loading photos...</p>
+                )}
+              </div>
             </div>
           </section>
         </main>

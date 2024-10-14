@@ -34,7 +34,7 @@ const App = () => {
     
     <BrowserRouter>
           <Header></Header>
-          <Routes>
+          <Routes basename={"/new"}>
             <Route path="admin" element={<ProtectedRoute><AdminPanel/></ProtectedRoute>}/>
             <Route path="news" element={<News />} />
             <Route path="zawodnik" element={<Gallery role="zawodnik"/>} />
