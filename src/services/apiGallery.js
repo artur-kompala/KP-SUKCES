@@ -93,6 +93,20 @@ export async function getAllTrening(){
   return data 
 }
 
+export async function deletePost(id){
+  
+  
+const { error } = await supabase
+.from('news')
+.delete()
+.eq('id', id)
+
+if(error){
+  console.log(error);
+}
+    return 0
+}
+
 
 
 

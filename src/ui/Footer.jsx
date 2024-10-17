@@ -1,6 +1,7 @@
 import React from "react"
+import { Link } from "react-router-dom";
 
-const Footer = (props) => {
+const Footer = () => {
   return (
     <footer class="bg-white rounded-lg shadow dark:bg-gray-800 m-4">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
@@ -11,16 +12,19 @@ const Footer = (props) => {
             </a>
             <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
                 <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">O nas</a>
+                    <Link to="/news" class="hover:underline me-4 md:me-6">Aktualności</Link>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">Aktualności</a>
+                    <Link to="/zdjecia" class="hover:underline me-4 md:me-6">Galeria</Link>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">Galeria</a>
+                    <Link to="/dopobrania" class="hover:underline me-4 md:me-6">Pliki do pobrania</Link>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline">Kontakt</a>
+                    <Link to="/treningi" class="hover:underline me-4 md:me-6">Treningi</Link>
+                </li>
+                <li>
+                    <Link to="/zarzad" class="hover:underline">Kontakt</Link>
                 </li>
             </ul>
         </div>

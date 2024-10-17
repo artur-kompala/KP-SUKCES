@@ -112,9 +112,6 @@ export default function Header() {
           <Link to="sklep" className="text-lg font-semibold leading-6 text-gray-900">
             Sklep
           </Link>
-          <Link to="/news" className="text-lg font-semibold leading-6 text-gray-900">
-            Kontakt
-          </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Link to="/admin" className="text-sm font-semibold leading-6 text-gray-900">

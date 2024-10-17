@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react';
-import { getAllPost } from "../services/apiGallery"
+import { deletePost, getAllPost } from "../services/apiGallery"
 import Viewer from 'react-viewer';
+import ProtectedAdmin from './ProtectedAdmin';
+import { TrashIcon } from '@heroicons/react/20/solid';
+
 
 
 export default function News() {
   const [visible, setVisible] = useState(false);
   const [posts, setPosts] = useState([]);
   const [currentImg, setCurrentImg] = useState(null);
+  const [reload,setReload] = useState(false)
 
     useEffect(function(){
       getAllPost().then((data)=>setPosts(data));
-    },[])
+    },[reload])
 
   return (
     <div className="bg-white py-24 sm:py-32">
@@ -53,6 +57,10 @@ export default function News() {
                   <p className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
                     {post.cat}
                   </p>
+                  <ProtectedAdmin>
+                  <TrashIcon className="size-6 text-gray-700 hover:text-gray-400" onClick={()=>deletePost(post.id).then(()=>setReload((prevState) => !prevState))}
+                    ></TrashIcon>
+                </ProtectedAdmin>
                 </div>
                 <div className="group relative">
                   <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
@@ -65,7 +73,9 @@ export default function News() {
                     {post.desc}
                   </p>
                 </div>
+                
               </div>
+              
             </article>
           ))}
         </div>

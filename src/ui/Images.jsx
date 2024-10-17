@@ -130,12 +130,13 @@ const Images = () => {
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
+              
+              <button type="button" onClick={()=>setReload((prevState) => !prevState)} class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100  font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 ">Szukaj</button>
               <button type="button" onClick={()=>{
                 setSelectedFilters(initialStateSelectedFilters)
                 setFilters(initialStateFilter)
                 setReload((prevState) => !prevState)
                 }} class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600">Reset</button>
-              <button type="button" onClick={()=>setReload((prevState) => !prevState)} class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100  font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 ">Szukaj</button>
                 {filters.map((section) => (
                   <Disclosure
                     key={section.name}
@@ -168,7 +169,7 @@ const Images = () => {
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-4">
                         {section.options.map((option, optionIdx) => (
-                          <div key={option} className="flex items-center">
+                          <div key={option} className="flex items-center w-full bg-gray-700 p-3 rounded-xl">
                             <input
                               type="radio"
                               id={`filter-${section.name}-${optionIdx}`}
@@ -178,11 +179,11 @@ const Images = () => {
                               onChange={() =>
                                 handleFilterChange(section.name, option)
                               }
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                             />
                             <label
                               htmlFor={`filter-${section.name}-${optionIdx}`}
-                              className="ml-3 text-sm text-gray-600"
+                              className="w-full py-1 ms-2 text-sm font-medium text-white"
                             >
                               {option}
                             </label>
