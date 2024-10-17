@@ -34,20 +34,20 @@ const App = () => {
     
     <BrowserRouter>
           <Header></Header>
-          <Routes basename={"/new"}>
-            <Route path="admin" element={<ProtectedRoute><AdminPanel/></ProtectedRoute>}/>
-            <Route path="news" element={<News />} />
-            <Route path="zawodnik" element={<Gallery role="zawodnik"/>} />
-            <Route path="trener" element={<Gallery role="trener"/>} />
-            <Route path="stary" element={<Gallery role="stary"/>} />
-            <Route path="skladka" element={<Contribution/>} />
-            <Route path="zarzad" element={<Management/>} />
-            <Route path="sklep" element={<Shop/>} />
-            <Route path="zdjecia" element={<Images/>} />
-            <Route path="treningi" element={<Training/>} />
-            <Route path="dopobrania" element={<Download/>} />
-            <Route path="login" element={<Login/>} />
-            <Route path="*" element={<PageNotFound />} />
+          <Routes>
+            <Route exact path="admin" element={<ProtectedRoute><AdminPanel/></ProtectedRoute>}/>
+            <Route exact path="news" element={<News />} />
+            <Route exact path="zawodnik" element={<Gallery role="Zawodnik"/>} />
+            <Route exact path="trener" element={<Gallery role="Trener"/>} />
+            <Route exact path="starzy" element={<Gallery role="Stary-zawodnik"/>} />
+            <Route exact path="skladka" element={<Contribution/>} />
+            <Route exact path="zarzad" element={<Management/>} />
+            <Route exact path="sklep" element={<Shop/>} />
+            <Route exact path="zdjecia" element={<Images/>} />
+            <Route exact path="treningi" element={<Training/>} />
+            <Route exact path="dopobrania" element={<Download/>} />
+            <Route exact path="login" element={<Login/>} />
+            <Route path="/" element={<PageNotFound />} />
           </Routes>
           <Footer></Footer>
           <Toaster />

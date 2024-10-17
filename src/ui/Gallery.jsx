@@ -21,7 +21,7 @@ import { getAllPeople } from "../services/apiGallery"
   
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {people.map((p) => (
-              <a key={p.id} href={p.rankSrc} className="group">
+              <div key={p.id}  className="group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                   <img
                     alt={p.fullName}
@@ -29,9 +29,9 @@ import { getAllPeople } from "../services/apiGallery"
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
                   />
                 </div>
-                <a className="mt-4 text-sm text-gray-700">{p.rankSrc ? "SwimRankings" : "Brak rankingu"}</a>
+                {p.rankSrc ? <a className="mt-4 text-sm text-gray-700" href={p.rankSrc}>SwimRankings</a> : <p className="mt-4 text-sm text-gray-700">Brak rankingu</p>}
                 <p className="mt-1 text-lg font-medium text-gray-900">{p.fullName}</p>
-              </a>
+              </div>
             ))}
           </div>
         </div>

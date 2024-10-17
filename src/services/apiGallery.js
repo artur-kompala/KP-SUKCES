@@ -93,21 +93,7 @@ export async function getAllTrening(){
   return data 
 }
 
-export async function getAllFolders() {
-  const { data, error } = await supabase.storage.from("gallery").list('', {
-    limit: 100, // Set limit according to your requirement
-        delimiter: '/', // Use delimiter to separate folders
-  });
 
-  if (error) {
-      console.error('Error fetching folders:', error);
-      return [];
-  }
-  const folderNames = data?.map(item => item.name) || [];
-  console.log(folderNames);
-  
-  return folderNames;
-}
 
 
 

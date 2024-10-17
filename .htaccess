@@ -1,14 +1,1 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-    
-    # Przekieruj wszystkie żądania na index.html
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ /new/index.html [L]
-    
-    # Opcjonalnie, jeśli chcesz dodać przekierowanie z kpsukces.pl/ na kpsukces.pl/new/
-    RewriteRule ^$ /new/ [L,R=301]
-    
-    
-</IfModule>
+Options -Indexes

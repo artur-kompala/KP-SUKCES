@@ -16,25 +16,34 @@ if ($conn->connect_error) {
     die("Błąd połączenia: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM images";
-$result = $conn->query($sql);
+// Sprawdzenie, czy nagłówek city został ustawiony
+$city = isset($_GET['city']) ? $_GET['city'] : null;
+
+if ($city) {
+    // Przygotowane zapytanie, aby zabezpieczyć przed SQL Injection
+    $stmt = $conn->prepare("SELECT * FROM images WHERE city = ?");
+    $stmt->bind_param("s", $city); // 's' oznacza, że parametry są typu string
+} else {
+    // Jeśli city nie jest ustawione, zwróć wszystkie obrazy
+    $stmt = $conn->prepare("SELECT * FROM images");
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
 
 $images = [];
 
 if ($result->num_rows > 0) {
     // Zwracanie wszystkich obrazów w formacie JSON
-    while($row = $result->fetch_assoc()) {
-        // Zakładamy, że 'img' to dane binarne, a 'title' to tytuł zdjęcia
+    while ($row = $result->fetch_assoc()) {
+        // Zakładamy, że 'img' to dane binarne, a 'descript' to opis zdjęcia
         $images[] = [
             'src' => 'data:image/jpeg;base64,' . base64_encode($row['img']),
-            'descript' => $row['descript'], // Zakładam, że masz kolumnę 'title' dla nazw zdjęć
-            'date' => $row['date'], // Zakładam, że masz kolumnę 'title' dla nazw zdjęć
-            'city' => $row['city'], // Zakładam, że masz kolumnę 'title' dla nazw zdjęć
+            'descript' => $row['descript'], // Zakładam, że masz kolumnę 'descript' dla opisów zdjęć
+            'date' => $row['date'], // Zakładam, że masz kolumnę 'date' dla dat zdjęć
+            'city' => $row['city'], // Zakładam, że masz kolumnę 'city'
         ];
     }
-} else {
-    echo json_encode([]);
-    exit();
 }
 
 // Zwróć wyniki w formacie JSON
@@ -45,5 +54,6 @@ header('Content-Type: application/json');
 echo json_encode($images);
 
 // Zamknięcie połączenia
+$stmt->close();
 $conn->close();
 ?>
